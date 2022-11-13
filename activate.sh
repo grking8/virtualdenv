@@ -1,21 +1,25 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -xe
 
 . ./virtualdenv.cfg
 export PYTHON_VERSION
-export GIT_EMAIL
-export GIT_USERNAME
-project_dir="/home/code"
-venv_dir="/opt/venv"
+project_dir_host=$(pwd)
+project_dir_container="/home/code"
+venv_dir_host="$(pwd)/venv"
+venv_dir_container="/opt/venv"
+ssh_dir_host="$(pwd)/.ssh"
+ssh_dir_container="/root/.ssh"
+image_repo="guydocker/virtualdenv:${PYTHON_VERSION}"
+host_name="host.docker.internal:host-gateway"
 docker run \
---mount type=bind,source="$(pwd)/venv",target=${venv_dir} \
---mount type=bind,source="$(pwd)",target=${project_dir} \
---mount type=bind,source="$(pwd)/.ssh",target=/root/.ssh \
+--mount type=bind,source=${venv_dir_host},target=${venv_dir_container} \
+--mount type=bind,source=${project_dir_host},target=${project_dir_container} \
+--mount type=bind,source=${ssh_dir_host},target=${ssh_dir_container} \
 --interactive \
 --tty \
---env PRE_COMMIT_HOME=${project_dir}/.cache \
---add-host=host.docker.internal:host-gateway \
+--env PRE_COMMIT_HOME=${project_dir_container}/.cache \
+--add-host=${host_name} \
 --network host \
-"guydocker/virtualdenv:${PYTHON_VERSION}" \
-/bin/bash -c "git config --global user.email $GIT_EMAIL && git config --global user.name $GIT_USERNAME && python -m venv $venv_dir && PATH=${venv_dir}/bin:${PATH} && python -m pip install --upgrade pip && bash"
+${image_repo} \
+/bin/sh -c "git config --global user.email $(git config user.email) && git config --global user.name $(git config user.name) && python -m venv $venv_dir_container && PATH=${venv_dir_container}/bin:${PATH} && python -m pip install --upgrade pip && bash"
