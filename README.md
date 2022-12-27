@@ -22,7 +22,9 @@
 - Specify hooks in `.pre-commit-config.yaml`
 - `mkdir venv`
 - `cp /path/to/virtualdenv/activate.sh .`
-- `cp -r ~/.ssh .`
+- `mkdir .ssh`
+- `cp -r ~/.ssh/<mypublickey> .ssh/id_rsa.pub`
+- `cp -r ~/.ssh/<myprivatekey> .ssh/id_rsa`
 - Ensure Docker daemon is running
 - Activate the virtual environment `./activate.sh`
 - `pre-commit install`
