@@ -3,7 +3,7 @@
 ### Build and push image to Docker Hub
 
 - `export PYTHON_VERSION=<version>`
-- `docker build --tag guydocker/virtualdenv:${PYTHON_VERSION} --build-arg PYTHON_VERSION --file dockerfiles/virtualenv/Dockerfile .`
+- `docker build --tag guydocker/virtualdenv:${PYTHON_VERSION} --build-arg PYTHON_VERSION --build-arg USER --build-arg USER_ID $(id -u $USER) --file dockerfiles/virtualenv/Dockerfile .`
 - `docker login -u guydocker`
 - Enter personal access token
 - `docker push guydocker/virtualdenv:${PYTHON_VERSION}`
