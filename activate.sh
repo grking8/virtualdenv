@@ -9,7 +9,7 @@ project_dir_container="/home/code"
 venv_dir_host="$(pwd)/venv"
 venv_dir_container="/opt/venv"
 ssh_dir_host="$(pwd)/.ssh"
-ssh_dir_container="/root/.ssh"
+ssh_dir_container="/home/${USER}/.ssh"
 image_repo="guydocker/virtualdenv:${PYTHON_VERSION}"
 host_name="host.docker.internal:host-gateway"
 docker run \
