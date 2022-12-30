@@ -18,6 +18,7 @@ docker run \
 --mount type=bind,source=${ssh_dir_host},target=${ssh_dir_container} \
 --interactive \
 --tty \
+--env TERM="xterm-256color" \
 --env PRE_COMMIT_HOME=${project_dir_container}/.cache \
 --add-host=${host_name} \
 --network host \

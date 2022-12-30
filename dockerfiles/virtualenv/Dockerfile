@@ -1,6 +1,7 @@
 ARG PYTHON_VERSION
 FROM python:${PYTHON_VERSION}-slim-buster
 
+COPY .bashrc /root/.bashrc
 RUN apt-get update
 RUN apt-get install -y git=1:2.20.1-2+deb10u3
 ENV PROJECT_DIR="/home/code"
