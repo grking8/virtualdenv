@@ -1,13 +1,3 @@
-## Local development
-
-### Build and push image to Docker Hub
-
-- `export PYTHON_VERSION=<version>`
-- `docker build --tag guydocker/virtualdenv:${PYTHON_VERSION} --build-arg PYTHON_VERSION --build-arg USER --build-arg USER_ID=$(id -u $USER) --file dockerfiles/virtualenv/Dockerfile .`
-- `docker login -u guydocker`
-- Enter personal access token
-- `docker push guydocker/virtualdenv:${PYTHON_VERSION}`
-
 ## Usage
 
 ### Activate virtual environment with pre-commit hooks
@@ -21,12 +11,18 @@
 - `touch virtualdenv.cfg` and specify Python version (see example in this repo)
 - Specify hooks in `.pre-commit-config.yaml`
 - `mkdir venv`
+- `export PYTHON_VERSION=<version>`
+- `git clone git@github.com:grking8/virtualdenv.git`
+- `cd /path/to/virtualdenv`
+- `docker build --tag virtualdenv:${PYTHON_VERSION} --build-arg PYTHON_VERSION --build-arg USER --build-arg USER_ID=$(id -u $USER) --file dockerfiles/virtualenv/Dockerfile .`
+- `cd /path/to/project`
 - `cp /path/to/virtualdenv/activate.sh .`
 - `mkdir .ssh`
 - `cp -r ~/.ssh/<mypublickey> .ssh/id_rsa.pub`
 - `cp -r ~/.ssh/<myprivatekey> .ssh/id_rsa`
 - Ensure Docker daemon is running
 - Activate the virtual environment `./activate.sh`
+- Install `pip` dependencies
 - `pre-commit install`
 - `pre-commit install --hook-type commit-msg`
 - `pre-commit autoupdate`
