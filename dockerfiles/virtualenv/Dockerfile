@@ -1,6 +1,8 @@
 ARG PYTHON_VERSION
 FROM python:${PYTHON_VERSION}-slim-buster
 
+RUN apt-get update
+RUN apt-get install -y vim
 ARG USER
 ARG USER_ID
 ENV HOME_DIR="/home/${USER}"
